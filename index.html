@@ -27,14 +27,14 @@ html,body{margin:0;background:#000}
 <script>
 // Сцены: [начало, конец, фон, строки[[текст, класс]]]
 const S=[
- [0,3.5,'#0d0f14',[['АЗИЯ','big'],['<span class=red>ПЛЮС</span>','big'],['независимая медиагруппа Таджикистана','sm']]],
- [3.5,7.5,'#E30613',[['С 1996','big'],['года','mid'],['30 лет пишем летопись страны','sm']]],
- [7.5,12,'#0d0f14',[['Агентство','mid'],['Газета','mid'],['Радио <span class=red>107 FM</span>','mid'],['ТВ-продакшн','mid']]],
- [12,16,'#f4f1ea',[['<span style="color:#0d0f14">1 000 000</span>','big num'],['<span style="color:#0d0f14">посетителей</span>','mid'],['<span class=red>в месяц на портале</span>','sm']]],
- [16,20,'#0d0f14',[['<span class=red>2 000 000+</span>','big num'],['подписчиков','mid'],['в соцсетях и мессенджерах','sm']]],
- [20,24,'#E30613',[['3 языка','big'],['Русский','mid'],['Тоҷикӣ','mid'],['English','mid']]],
- [24,27.3,'#0d0f14',[['Читайте.','mid'],['Смотрите.','mid'],['<span class=red>Слушайте.</span>','mid']]],
- [27.3,30,'#E30613',[['asiaplus','mid'],['.news','mid'],['@asiaplustj','sm']]],
+ [0,3.5,'#0d0f14',[['Услуги','big'],['<span class=red>Азия-Плюс</span>','mid'],['всё, что делает медиагруппа','sm']]],
+ [3.5,7.5,'#E30613',[['01','mid'],['Инфо-','big'],['агентство','mid'],['новости на 3 языках: RU · TJ · EN','sm']]],
+ [7.5,11.5,'#0d0f14',[['<span class=red>02</span>','mid'],['Портал','big'],['asiaplus.news','sm'],['≈ 1 млн посетителей в месяц','sm']]],
+ [11.5,15.5,'#f4f1ea',[['<span class=red>03</span>','mid'],['<span style="color:#0d0f14">Газета</span>','big'],['<span style="color:#0d0f14">еженедельная, с 2000 года</span>','sm'],['<span style="color:#0d0f14">≈ 10 000 экз. в месяц</span>','sm']]],
+ [15.5,19.5,'#0d0f14',[['<span class=red>04</span>','mid'],['Радио','big'],['<span class=red>107 FM</span>','mid'],['Душанбе · Бохтар','sm'],['Худжанд — 104,4 FM','sm']]],
+ [19.5,23,'#E30613',[['05','mid'],['ТВ-','big'],['продакшн','mid'],['видео, сюжеты, подкасты','sm']]],
+ [23,26.8,'#0d0f14',[['Новости','mid'],['Интервью','mid'],['Инфографика','mid'],['<span class=red>Видео · Подкасты</span>','mid']]],
+ [26.8,30,'#E30613',[['Читайте.','mid'],['Смотрите.','mid'],['Слушайте.','mid'],['asiaplus.news · @asiaplustj','sm']]],
 ];
 const box=document.getElementById('scenes');
 S.forEach((s,i)=>{const d=document.createElement('div');d.className='scene';d.id='s'+i;
