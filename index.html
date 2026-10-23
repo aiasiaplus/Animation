@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Азия-Плюс — 30 сек</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E30613;--ink:#0d0f14;--paper:#f4f1ea}
+html,body{margin:0;background:#000}
+#stage{width:1080px;height:1920px;position:relative;overflow:hidden;background:var(--ink);font-family:Montserrat,Arial,sans-serif;color:#fff;transform-origin:0 0}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 90px;opacity:0}
+.w{display:inline-block;will-change:transform}
+.l{overflow:hidden;line-height:1.02}
+.big{font-weight:900;font-size:170px;letter-spacing:-6px}
+.mid{font-weight:800;font-size:110px;letter-spacing:-3px}
+.sm{font-weight:500;font-size:52px;opacity:.85}
+.num{font-size:150px}
+.red{color:var(--red)}
+.bar{position:absolute;left:0;height:24px;background:var(--red)}
+#prog{position:absolute;left:0;bottom:0;height:10px;background:var(--red)}
+.tag{position:absolute;top:110px;left:90px;font-weight:800;font-size:40px;letter-spacing:6px}
+</style></head><body>
+<div id="stage">
+  <div class="bar" id="bar1" style="top:0"></div>
+  <div class="tag">АЗИЯ<span class="red">+</span>ПЛЮС</div>
+  <div id="scenes"></div>
+  <div id="prog"></div>
+</div>
+<script>
+// Сцены: [начало, конец, фон, строки[[текст, класс]]]
+const S=[
+ [0,3.5,'#0d0f14',[['АЗИЯ','big'],['<span class=red>ПЛЮС</span>','big'],['независимая медиагруппа Таджикистана','sm']]],
+ [3.5,7.5,'#E30613',[['С 1996','big'],['года','mid'],['30 лет пишем летопись страны','sm']]],
+ [7.5,12,'#0d0f14',[['Агентство','mid'],['Газета','mid'],['Радио <span class=red>107 FM</span>','mid'],['ТВ-продакшн','mid']]],
+ [12,16,'#f4f1ea',[['<span style="color:#0d0f14">1 000 000</span>','big num'],['<span style="color:#0d0f14">посетителей</span>','mid'],['<span class=red>в месяц на портале</span>','sm']]],
+ [16,20,'#0d0f14',[['<span class=red>2 000 000+</span>','big num'],['подписчиков','mid'],['в соцсетях и мессенджерах','sm']]],
+ [20,24,'#E30613',[['3 языка','big'],['Русский','mid'],['Тоҷикӣ','mid'],['English','mid']]],
+ [24,27.3,'#0d0f14',[['Читайте.','mid'],['Смотрите.','mid'],['<span class=red>Слушайте.</span>','mid']]],
+ [27.3,30,'#E30613',[['asiaplus','mid'],['.news','mid'],['@asiaplustj','sm']]],
+];
+const box=document.getElementById('scenes');
+S.forEach((s,i)=>{const d=document.createElement('div');d.className='scene';d.id='s'+i;
+ d.innerHTML=s[3].map(([t,c])=>`<div class="l ${c}"><span class="w">${t}</span></div>`).join('');box.appendChild(d)});
+const ease=x=>1-Math.pow(1-Math.min(Math.max(x,0),1),4), clamp=x=>Math.min(Math.max(x,0),1);
+function seek(t){
+ const st=document.getElementById('stage');
+ S.forEach((s,i)=>{const el=document.getElementById('s'+i),[a,b,bg]=s,on=t>=a&&t<b;
+  el.style.opacity=on?1:0; if(!on)return; st.style.background=bg;document.querySelector('.tag').style.color=bg=='#f4f1ea'?'#0d0f14':'#fff';document.querySelector('.tag span').style.color=bg=='#E30613'?'#0d0f14':'';
+  const lt=t-a,dur=b-a;
+  [...el.querySelectorAll('.w')].forEach((w,j)=>{
+   const p=ease((lt-j*.18)/.6), out=ease((lt-(dur-.45))/.4);
+   w.style.transform=`translateY(${(1-p)*110+out*-110}%) skewY(${(1-p)*6}deg)`;
+   const n=w.parentNode.classList.contains('num');
+   if(n){const target=+(w.dataset.n??(w.dataset.n=w.textContent.replace(/\D/g,''))),v=Math.round(target*ease(lt/1.8));
+     const span=w.querySelector('span');span.textContent=v.toLocaleString('ru-RU').replace(/,/g,' ')+(span.dataset.plus??(span.dataset.plus=span.textContent.includes('+')?'+':''));}
+  });
+  el.style.transform=`scale(${1+lt*.012})`;
+ });
+ const b1=document.getElementById('bar1');b1.style.width=(Math.sin(t*1.3)*.5+.5)*100+'%';
+ document.getElementById('prog').style.width=(t/30*100)+'%';
+}
+window.seek=seek;
+if(!location.search.includes('render')){
+ const fit=()=>{const k=Math.min(innerWidth/1080,innerHeight/1920);document.getElementById('stage').style.transform=`scale(${k})`};
+ fit();onresize=fit;const t0=performance.now();
+ (function loop(){seek(((performance.now()-t0)/1000)%30);requestAnimationFrame(loop)})();
+}else seek(0);
+</script></body></html>
